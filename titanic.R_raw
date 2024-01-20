@@ -122,8 +122,6 @@ predict_foo <- function(model,test,class_type){
     my_predict_result <- predict(model,test,type = "class")
   }
   
-  if(length(as.data.frame(my_predict_result) != 1))
-  
   result_class_algo <- table(gender_submission$Survived,my_predict_result)
   accuracy <- (result_class_algo[1] + result_class_algo[4]) / sum(result_class_algo[1:4])
   
