@@ -118,17 +118,20 @@ predict_foo <- function(model,test,class_type){
   if(class_type == "logistic"){
     result <- predict(model, test, type = "response")
     my_predict_result <- ifelse(result > 0.5,1,0)
+    result_class_algo <- table(gender_submission$Survived,my_predict_result)
+    accuracy <- (result_class_algo[1] + result_class_algo[4]) / sum(result_class_algo[1:4])
+    p_correct <- ((result_class_algo[1] + result_class_algo[2]) / sum(result_class_algo[1:4])) * ((result_class_algo[1] + result_class_algo[3]) / sum(result_class_algo[1:4]))
+    p_incorrect <- ((result_class_algo[3] + result_class_algo[4]) / sum(result_class_algo[1:4])) * ((result_class_algo[2] + result_class_algo[4]) / sum(result_class_algo[1:4]))
+    p_e <- p_correct + p_incorrect
+    kappa_value <- (accuracy - p_e) / (1-p_e)
+    return(list(result_class_algo, accuracy, kappa_value))
   }else{
     my_predict_result <- predict(model,test,type = "class")
+    more_result <- confusionMatrix(my_predict_result,as.factor(gender_submission$Survived))
+    return(more_result)
   }
   
-  result_class_algo <- table(gender_submission$Survived,my_predict_result)
-  accuracy <- (result_class_algo[1] + result_class_algo[4]) / sum(result_class_algo[1:4])
-  
-  
-  return(list(result_class_algo, accuracy))
 }
-
 
 predict_foo(stepmodel,logtest,"logistic") # Logistic Confusion Matrix
 
