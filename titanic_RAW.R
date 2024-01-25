@@ -26,9 +26,9 @@ library(rpart.plot)
 library(caret)
 library(randomForest)
 
-train <- read_csv("C:/Users/mtey4/Desktop/Titanic/train.csv")
-test <- read_csv("C:/Users/mtey4/Desktop/Titanic/test.csv")
-gender_submission <- read_csv("C:/Users/mtey4/Desktop/Titanic/gender_submission.csv")
+train <- read_csv("../train.csv")
+test <- read_csv("../test.csv")
+gender_submission <- read_csv("../gender_submission.csv")
 
 # Train Split Done #
 
